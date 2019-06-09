@@ -1,0 +1,30 @@
+{
+  "name": "test-app",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "node -r esm ./server.js"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.472.0",
+    "bcrypt": "^3.0.6",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.9",
+    "dotenv": "^8.0.0",
+    "esm": "^3.2.25",
+    "express": "~4.16.0",
+    "express-graphql": "^0.8.0",
+    "graphql": "14.2.1",
+    "http-errors": "~1.6.2",
+    "jade": "~1.11.0",
+    "jsonwebtoken": "^8.5.1",
+    "morgan": "~1.9.0",
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0",
+    "uuid": "^3.3.2"
+  },
+  "devDependencies": {
+    "dynamodb-local": "0.0.29",
+    "fs": "0.0.1-security"
+  }
+}
