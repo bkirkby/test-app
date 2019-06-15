@@ -6,7 +6,7 @@ import jwt_decode from 'jwt-decode'
 class LoginForm extends React.Component {
   state = {
     isLogin: true,
-    user: { email: '', password: '' },
+    user: this.props.user,
     error: ''
   }
 
@@ -15,9 +15,9 @@ class LoginForm extends React.Component {
     this.setState({ isLogin: !this.state.isLogin })
   }
 
-  getEmailFromToken = token => {
-    const { email } = jwt_decode(token)
-    return email
+  getUserFromToken = token => {
+    const { email, role } = jwt_decode(token)
+    return { email, role }
   }
 
   handleSubmit = e => {
@@ -30,7 +30,7 @@ class LoginForm extends React.Component {
       )
       .then(res => {
         localStorage.setItem('token', res.data.token)
-        this.props.setUserEmail(this.getEmailFromToken(res.data.token))
+        this.props.setUser(this.getUserFromToken(res.data.token))
         this.props.history.push('/profile')
       })
       .catch(err => {

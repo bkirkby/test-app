@@ -38,6 +38,14 @@ app.options('/graphql', function(req, res) {
   res.json({ message: 'all good' })
 })
 
+app.use('/graphql', passport.authenticate('jwt', { session: false }), function(
+  req,
+  res,
+  next
+) {
+  next()
+})
+
 app.use(
   '/graphql',
   graphqlHTTP({

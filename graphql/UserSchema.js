@@ -9,6 +9,7 @@ export const UserSchema = buildSchema(`
   type User {
     id: String
     email: String
+    role: String
   },
 `)
 

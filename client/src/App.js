@@ -21,7 +21,7 @@ class App extends React.Component {
   state = {
     appName: process.env.REACT_APP_TITLE,
     showNavbar: true,
-    email: ''
+    user: {}
   }
 
   handleNavbarHide = () => {
@@ -35,22 +35,22 @@ class App extends React.Component {
     if (!token) {
       return
     }
-    const { exp, email } = jwt_decode(token)
+    const { exp, email, role } = jwt_decode(token)
     const currTime = Math.round(new Date().getTime() / 1000)
     if (exp <= currTime) {
-      this.setUserEmail('')
+      this.setUser({})
     } else {
-      this.setUserEmail(email)
+      this.setUser({ email, role })
     }
   }
 
-  setUserEmail = email => {
-    this.setState({ ...this.state, email: email })
+  setUser = user => {
+    this.setState({ ...this.state, user: user })
   }
 
   logout = history => {
     localStorage.removeItem('token')
-    this.setUserEmail('')
+    this.setUser({})
     history.push('/login')
   }
 
@@ -73,14 +73,15 @@ class App extends React.Component {
                     Home
                   </NavLink>
                 </NavItem>
+                {this.state.user.role === 'admin' && (
+                  <NavItem>
+                    <NavLink className="nav-link" to="/users">
+                      Users
+                    </NavLink>
+                  </NavItem>
+                )}
                 <NavItem>
-                  <NavLink className="nav-link" to="/users">
-                    Users
-                  </NavLink>
-                </NavItem>
-                <NavItem />
-                <NavItem>
-                  {this.state.email ? (
+                  {this.state.user && this.state.user.email ? (
                     <NavLink className="nav-link" to="/profile">
                       Profile
                     </NavLink>
@@ -100,7 +101,11 @@ class App extends React.Component {
             <Route
               path="/login"
               render={props => (
-                <LoginForm {...props} setUserEmail={this.setUserEmail} />
+                <LoginForm
+                  {...props}
+                  user={this.state.user}
+                  setUser={this.setUser}
+                />
               )}
             />
             <Route
@@ -108,7 +113,7 @@ class App extends React.Component {
               render={props => (
                 <Profile
                   {...props}
-                  email={this.state.email}
+                  user={this.state.user}
                   logout={this.logout}
                 />
               )}
