@@ -1,11 +1,8 @@
 import express from 'express'
 import User from '../models/user'
 import bcrypt from 'bcrypt'
-import dotenv from 'dotenv'
-import passport from 'passport'
 import jwt from 'jsonwebtoken'
 
-dotenv.config()
 const jwtSecret = process.env.JWT_SECRET || 'the default secret'
 const router = express.Router()
 
@@ -31,7 +28,7 @@ router.post('/register', (req, res) => {
       newUser
         .save()
         .then(user => {
-          const payload = { email: user.email }
+          const payload = { email: user.email, role: user.role }
           jwtSign(payload, (err, token) => {
             if (err) {
               res.status(500).json({ error: 'error signing token', raw: err })
@@ -61,7 +58,7 @@ router.post('/login', (req, res) => {
       }
       bcrypt.compare(password, user.password).then(isMatch => {
         if (isMatch) {
-          const payload = { email: user.email }
+          const payload = { email: user.email, role: user.role }
           jwtSign(payload, (err, token) => {
             if (err) {
               res.status(500).json({ error: 'error signing token', raw: err })

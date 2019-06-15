@@ -1,9 +1,11 @@
-#!/usr/bin/env node -require esm
+#!/usr/bin/env node -r esm
 
 process.env.DEBUG="createDBs.sh";
 
 import dotenv from 'dotenv';
+
 dotenv.config();
+
 import DynamoDB from 'aws-sdk/clients/dynamodb';
 
 const debug = require('debug')(process.env.DEBUG);

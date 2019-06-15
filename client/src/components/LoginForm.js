@@ -24,7 +24,10 @@ class LoginForm extends React.Component {
     e.preventDefault()
     const endpoint = this.state.isLogin ? 'login' : 'register'
     axios
-      .post(`${process.env.REACT_APP_API_URL}/${endpoint}`, this.state.user)
+      .post(
+        `${process.env.REACT_APP_API_URL}/users/${endpoint}`,
+        this.state.user
+      )
       .then(res => {
         localStorage.setItem('token', res.data.token)
         this.props.setUserEmail(this.getEmailFromToken(res.data.token))

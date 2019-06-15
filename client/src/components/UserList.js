@@ -8,8 +8,6 @@ class UserList extends React.Component {
     users: []
   }
   componentDidMount() {
-    console.log('bk: UserList: componentDidMount')
-
     const client = new ApolloClient({
       uri: `${process.env.REACT_APP_API_URL}/graphql`
     })

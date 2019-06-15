@@ -11,14 +11,16 @@ class User {
     this.email = user.email
     this.password = user.password
     this.id = user.id
+    this.role = user.role ? user.role : 'user'
   }
 
-  static _save(email, hash, id) {
+  static _save(email, hash, id, role) {
     let params = {
       Item: {
         id: { S: id ? id : uuid() },
         email: { S: email },
-        password: { S: hash }
+        password: { S: hash },
+        role: { S: role }
       },
       TableName: tableName
     }
@@ -37,7 +39,7 @@ class User {
     return new Promise((resolve, reject) => {
       User.hashPassword(this.password)
         .then(hash => {
-          return User._save(this.email, hash)
+          return User._save(this.email, hash, this.id, this.role)
         })
         .then(ddb_result => resolve(ddb_result))
         .catch(err => reject(err))
@@ -72,7 +74,9 @@ class User {
             resolve(
               new User({
                 email: data.Item.email.S,
-                password: data.Item.password.S
+                password: data.Item.password.S,
+                role: data.Item.role ? data.Item.role.S : 'user',
+                id: data.Item.id.S
               })
             )
           } else {

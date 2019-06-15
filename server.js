@@ -7,10 +7,13 @@ import passportConfig from './passport-config'
 import usersRouter from './routes/users'
 import bodyParser from 'body-parser'
 import cors from 'cors'
+import dotenv from 'dotenv'
+
+dotenv.config()
 
 const corsOptions = {
   origin(origin, callback) {
-    if (origin.indexOf(process.env.REACT_APP_CORS_MATCH) != -1) {
+    if (!origin || origin.indexOf(process.env.CORS_MATCH) != -1) {
       callback(null, true)
     } else {
       callback(null, false)
@@ -51,5 +54,7 @@ app.get('/secret', passport.authenticate('jwt', { session: false }), function(
   res.json({ message: 'success! you cannot see this without a token!' })
 })
 
-app.listen(4000)
-console.log('running a graphql api server at localhost:4000/graphql')
+const api_port = process.env.API_SERVER_PORT
+
+app.listen(api_port)
+console.log(`running a graphql api server at localhost:${api_port}`)

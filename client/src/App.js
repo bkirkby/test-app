@@ -19,7 +19,7 @@ import './App.css'
 
 class App extends React.Component {
   state = {
-    appName: 'Test Application',
+    appName: process.env.REACT_APP_TITLE,
     showNavbar: true,
     email: ''
   }
@@ -31,7 +31,6 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    console.log(process.env)
     const token = localStorage.getItem('token')
     if (!token) {
       return

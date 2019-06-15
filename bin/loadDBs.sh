@@ -1,4 +1,4 @@
-#!/usr/bin/node --require=esm
+#!/usr/bin/env node -r esm
 
 process.env.DEBUG="loadDBs.sh";
 

@@ -3,8 +3,6 @@ import User from './models/user'
 
 const secret = process.env.JWT_SECRET || 'devsecret'
 
-console.log('bk: secret: ', secret)
-
 const opts = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
   secretOrKey: secret
