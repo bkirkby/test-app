@@ -1,4 +1,4 @@
-#!/usr/bin/node --require=esm
+#!/usr/bin/env node -require esm
 
 process.env.DEBUG="createDBs.sh";
 

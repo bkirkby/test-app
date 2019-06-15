@@ -1,4 +1,4 @@
-#!/usr/bin/node
+#!/usr/bin/env node
 process.env.DEBUG="dynamodb-local"
 
 const DynamoDbLocal = require('dynamodb-local');

@@ -1,7 +1,5 @@
-import React from 'react';
+import React from 'react'
 
-export default (props) => {
-  return (
-    <div><h1>home page</h1></div>
-  )
+export default () => {
+  return <div>home page</div>
 }
